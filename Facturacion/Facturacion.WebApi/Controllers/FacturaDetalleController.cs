@@ -15,6 +15,10 @@ namespace Facturacion.WebApi.Controllers
             _facturaDetalleService = facturaDetalleService;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+            => Ok(await _facturaDetalleService.GetAllAsync());
+
         [HttpGet("factura/{facturaId}")]
         public async Task<IActionResult> GetByFactura(int facturaId)
             => Ok(await _facturaDetalleService.GetByFacturaIdAsync(facturaId));

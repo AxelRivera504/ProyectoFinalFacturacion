@@ -30,7 +30,7 @@ namespace Facturacion.Infrastructure.Configs
                 .HasMaxLength(150);//El maximo de caracteres de este campo es de 150
 
             // -5. Campo Telefono
-            builder.Property(x => x.Email)
+            builder.Property(x => x.Telefono)
                 .HasMaxLength(20);//El maximo de caracteres de este campo es de 20
 
             // -6. Campo Activo

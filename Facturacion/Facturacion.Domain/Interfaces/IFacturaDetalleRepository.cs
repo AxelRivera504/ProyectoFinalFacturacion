@@ -4,6 +4,7 @@ namespace Facturacion.Domain.Interfaces
 {
     public interface IFacturaDetalleRepository
     {
+        Task<List<FacturaDetalle>> GetAllAsync();
         Task<List<FacturaDetalle>> GetByFacturaIdAsync(int facturaId);
         Task<FacturaDetalle?> GetByIdAsync(int id);
         Task<FacturaDetalle> CreateAsync(FacturaDetalle detalle);

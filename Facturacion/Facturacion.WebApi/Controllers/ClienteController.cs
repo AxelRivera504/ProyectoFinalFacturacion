@@ -53,7 +53,7 @@ namespace Facturacion.WebApi.Controllers
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
-        { 
+        {
             await _clienteService.DeleteAsync(id);
             return NoContent();
         }

@@ -14,6 +14,11 @@ namespace Facturacion.Infrastructure.Repositories
             _context = context;
         }
 
+        public async Task<List<FacturaDetalle>> GetAllAsync()
+            => await _context.FacturaDetalles
+                .Include(d => d.Producto)
+                .ToListAsync();
+
         public async Task<List<FacturaDetalle>> GetByFacturaIdAsync(int facturaId)
             => await _context.FacturaDetalles
                 .Include(d => d.Producto)

@@ -1,9 +1,9 @@
 ﻿using Facturacion.Application.Dtos.Cliente;
+using Facturacion.Application.Exceptions;
 using Facturacion.Application.Extensions;
 using Facturacion.Application.Interfaces;
 using Facturacion.Application.Validators.Cliente;
 using Facturacion.Domain.Interfaces;
-using FluentValidation;
 
 namespace Facturacion.Application.UseCases
 {
@@ -24,6 +24,8 @@ namespace Facturacion.Application.UseCases
         public async Task<ClienteDto?> GetByIdAsync(int id)
         {
             var cliente = await _clienteRepository.GetByIdAsync(id);
+            if (cliente is null)
+                throw new NotFoundException("Cliente", id);
             return cliente.ToDto();
         }
 
@@ -45,7 +47,7 @@ namespace Facturacion.Application.UseCases
             var validator = new CreateClienteValidatorDto();
             var result = validator.Validate(clienteDto);
             if (!result.IsValid)
-                throw new Exception(string.Join(",", result.Errors.Select(e => e.ErrorMessage)));
+                throw new BusinessException(string.Join(",", result.Errors.Select(e => e.ErrorMessage)));
 
             await _clienteRepository.CreateAsync(clienteDto.ToEntity());
         }
@@ -61,7 +63,7 @@ namespace Facturacion.Application.UseCases
             if (cliente is null)
                 throw new ArgumentNullException("Cliente no encontrado para actualizar");
 
-            await _clienteRepository.UpdateAsync(id ,clienteDto.ToEntity());
+            await _clienteRepository.UpdateAsync(id, clienteDto.ToEntity());
         }
 
         public async Task DeleteAsync(int id)

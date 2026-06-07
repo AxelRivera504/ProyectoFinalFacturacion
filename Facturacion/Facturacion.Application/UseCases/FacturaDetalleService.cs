@@ -16,6 +16,12 @@ namespace Facturacion.Application.UseCases
             _facturaRepository = facturaRepository;
         }
 
+        public async Task<List<FacturaDetalleDto>> GetAllAsync()
+        {
+            var detalles = await _detalleRepository.GetAllAsync();
+            return detalles.Select(d => d.ToDto()).ToList();
+        }
+
         public async Task<List<FacturaDetalleDto>> GetByFacturaIdAsync(int facturaId)
         {
             var detalles = await _detalleRepository.GetByFacturaIdAsync(facturaId);

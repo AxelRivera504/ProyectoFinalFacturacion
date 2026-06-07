@@ -6,40 +6,38 @@ using Facturacion.Infrastructure.Context;
 using Facturacion.Infrastructure.Repositories;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using Facturacion.Application.DependecyInjection;
+using Facturacion.Infrastructure.DependencyInjection;
+using Facturacion.WebApi.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+builder.Services.AddApplication().AddInfrastructure(builder.Configuration);
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-//builder.Services.AddSwaggerGen(c =>
-//    {
-//        c.SwaggerDoc("V1", new() { 
-//            Title = "Facturaci�n Api - Clean Architecture",
-//            Version = "V1",
-//            Description = "NetVerk - Curso C# .Net"
-//        });
-
-//    }
-//);
 builder.Services.AddSwaggerGen();
 
-//Conexion a base de datos
-builder.Services.AddDbContext<FacturacionContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+//Comentado por uso de metodos de extensión por proyecto
+////Conexion a base de datos
+//builder.Services.AddDbContext<FacturacionContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-//Repositories
-builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
-builder.Services.AddScoped<IFacturaRepository, FacturaRepository>();
-builder.Services.AddScoped<IFacturaDetalleRepository, FacturaDetalleRepository>();
+////Repositories
+//builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
+//builder.Services.AddScoped<IFacturaRepository, FacturaRepository>();
+//builder.Services.AddScoped<IFacturaDetalleRepository, FacturaDetalleRepository>();
+//builder.Services.AddScoped<IProductoRepository, ProductoRepository>();
 
-//Services
-builder.Services.AddScoped<IClienteService, ClienteService>();
-builder.Services.AddScoped<IFacturaService, FacturaService>();
-builder.Services.AddScoped<IFacturaDetalleService, FacturaDetalleService>();
+////Services
+//builder.Services.AddScoped<IClienteService, ClienteService>();
+//builder.Services.AddScoped<IFacturaService, FacturaService>();
+//builder.Services.AddScoped<IFacturaDetalleService, FacturaDetalleService>();
+//builder.Services.AddScoped<IProductoService, ProductoService>();
 
-builder.Services.AddValidatorsFromAssemblyContaining<CreateClienteValidatorDto>();
+//builder.Services.AddValidatorsFromAssemblyContaining<CreateClienteValidatorDto>();
 
 var app = builder.Build();
 
@@ -51,6 +49,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+//Este middleware se ejcutar antes de los controllers
+app.UseMiddleware<GlobalExceptionMiddleware>();
 
 app.UseAuthorization();
 
