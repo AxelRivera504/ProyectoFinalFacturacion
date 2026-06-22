@@ -57,11 +57,11 @@ namespace Facturacion.Application.UseCases
             var validator = new UpdateClienteValidatorDto();
             var result = validator.Validate(clienteDto);
             if (!result.IsValid)
-                throw new Exception(string.Join(",", result.Errors.Select(e => e.ErrorMessage)));
+                throw new BusinessException(string.Join(",", result.Errors.Select(e => e.ErrorMessage)));
 
             var cliente = await _clienteRepository.GetByIdAsync(id);
             if (cliente is null)
-                throw new ArgumentNullException("Cliente no encontrado para actualizar");
+                throw new NotFoundException("Cliente", id);
 
             await _clienteRepository.UpdateAsync(id, clienteDto.ToEntity());
         }

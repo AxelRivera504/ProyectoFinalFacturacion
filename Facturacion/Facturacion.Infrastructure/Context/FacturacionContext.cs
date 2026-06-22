@@ -1,6 +1,7 @@
 using Facturacion.Domain.Entities;
 using Facturacion.Infrastructure.Configs;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace Facturacion.Infrastructure.Context
 {
@@ -8,6 +9,7 @@ namespace Facturacion.Infrastructure.Context
     {
         public FacturacionContext(DbContextOptions<FacturacionContext> options) : base(options) { }
 
+        public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Cliente> Clientes { get; set; }
         public DbSet<Factura> Facturas { get; set; }
         public DbSet<Producto> Productos { get; set; }

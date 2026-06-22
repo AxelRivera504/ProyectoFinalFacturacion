@@ -1,9 +1,11 @@
 using Facturacion.Application.Dtos.FacturaDetalle;
 using Facturacion.Application.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Facturacion.WebApi.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class FacturaDetalleController : ControllerBase

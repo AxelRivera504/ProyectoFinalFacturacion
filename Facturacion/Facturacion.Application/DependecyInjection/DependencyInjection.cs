@@ -20,6 +20,7 @@ namespace Facturacion.Application.DependecyInjection
             services.AddScoped<IFacturaService, FacturaService>();
             services.AddScoped<IFacturaDetalleService, FacturaDetalleService>();
             services.AddScoped<IProductoService, ProductoService>();
+            services.AddScoped<IAuthService, AuthService>();
 
             services.AddValidatorsFromAssemblyContaining<CreateClienteValidatorDto>();
 

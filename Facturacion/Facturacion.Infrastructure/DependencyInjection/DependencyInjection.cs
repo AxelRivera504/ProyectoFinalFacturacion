@@ -16,6 +16,7 @@ namespace Facturacion.Infrastructure.DependencyInjection
             services.AddScoped<IFacturaRepository, FacturaRepository>();
             services.AddScoped<IFacturaDetalleRepository, FacturaDetalleRepository>();
             services.AddScoped<IProductoRepository, ProductoRepository>();
+            services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 
             return services;
         }
